@@ -22,7 +22,9 @@ module "orc8r" {
   # orc8r_db_engine_version     = "9.6.15"
   # orc8r_db_engine_version     = "9.6.24"
   orc8r_db_engine_version     = "12.9"
-  orc8r_db_apply_immediately = true
+
+  # For 1.7 db upgrade
+  # orc8r_db_apply_immediately = true
 
   # If you performing a fresh Orc8r install, choose a recent Postgres version
   orc8r_db_password = "mypassword" # must be at least 8 characters
@@ -39,7 +41,7 @@ module "orc8r" {
 
   deploy_elasticsearch          = true
   elasticsearch_domain_name     = "orc8r-es"
-  elasticsearch_version         = "7.7"
+  elasticsearch_version         = "7.10"
   elasticsearch_instance_type   = "t2.medium.elasticsearch"
   elasticsearch_instance_count  = 2
   elasticsearch_az_count        = 2
@@ -64,12 +66,6 @@ module "orc8r-app" {
 
   secretsmanager_orc8r_name = module.orc8r.secretsmanager_secret_name
   seed_certs_dir            = "./certs"
-
-  deploy_cert_manager_helm_chart    = module.orc8r.setup_cert_manager
-  managed_certs_create              = module.orc8r.setup_cert_manager
-  managed_certs_enabled             = module.orc8r.setup_cert_manager
-  nms_managed_certs_enabled         = module.orc8r.setup_cert_manager
-  cert_manager_route53_iam_role_arn = module.orc8r.cert_manager_route53_iam_role_arn
 
   orc8r_db_host    = module.orc8r.orc8r_db_host
   orc8r_db_port    = module.orc8r.orc8r_db_port
@@ -99,7 +95,7 @@ module "orc8r-app" {
 
   orc8r_deployment_type = "fwa"
   # orc8r_tag             = "1.6.1"
-  orc8r_tag             = "7bbef19"
+  orc8r_tag             = "2474470"
 }
 
 output "nameservers" {
